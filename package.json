@@ -1,6 +1,6 @@
 {
   "name": "wp-slowlog-analyzer",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A better WordPress slowlog analyzer",
   "main": "slothy.js",
   "scripts": {
