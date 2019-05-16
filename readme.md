@@ -1,5 +1,9 @@
 # Slothy, the WordPress Slowlog Analyzer
 
+Slothy on NPM: [https://www.npmjs.com/package/wp-slowlog-analyzer](https://www.npmjs.com/package/wp-slowlog-analyzer)
+
+Slothy on GitHub: [https://github.com/josh-collinsworth/slothy](https://github.com/josh-collinsworth/slothy)
+
 ## What is slothy?
 
 Slothy is a simple node program designed to read a slow_error log file from a WordPress site, count the errors and sort the number of slow_errors by their sources.
