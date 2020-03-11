@@ -27,10 +27,10 @@ console.log(`(Only use this tool on valid WP slowlog files, or weird stuff will 
 
 //Runs for each line in the supplied file
 lineReader.on('line', function (line) {
-    if (line.match(/^$/)){
-        let errorsToPush = [...new Set(thisError)]; 
+    if (line.match(/^\s*$/)){
+        let errorsToPush = [...new Set(thisError)];
         if(errorsToPush.length == 0){ //This means the slow_error we're logging is from wp-core; handle accordingly
-            errorsToPush = ['**wp-core**'];
+            errorsToPush = ['**no_plugin_or_theme**'];
         }
         errorsToPush.forEach(error => {
             if (allErrorSources.hasOwnProperty(error)) {
@@ -41,7 +41,7 @@ lineReader.on('line', function (line) {
         })
         thisError = [];
         totalErrors++;
-    } else if(line.match(/\/(plugins|themes)\/[^\/]*/i)){
+    } else if(line.match(/.+\/(plugins|themes)\/[^\/]*/i)){
         thisError.push(line.match(/\/(plugins|themes)\/[^\/]*/i)[0]);
     }
 });
@@ -62,7 +62,7 @@ lineReader.on('close', () => {
         const source = errString.match(/^[^\s]+/).toString().padEnd(60);
         const sourceTotal = errString.match(/[0-9]+$/);
 
-        finalPresentation += source + chalk.bold(sourceTotal.toString().padEnd(8)) + `${(sourceTotal / totalErrors * 100).toFixed(2)}%\n`;    
+        finalPresentation += source + chalk.bold(sourceTotal.toString().padEnd(8)) + `${(sourceTotal / totalErrors * 100).toFixed(2)}%\n`;
     });
 
     //Final output
