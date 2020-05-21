@@ -83,11 +83,31 @@ script_filename = /www//.wordpress/wp-login.php
 
 ```
 
-Slothy would flag this as one slow error, and count `/plugins/jetpack` as the source. (Only once, however; no matter how many times a plugin or theme is mentioned in a slow_error log entry, it will only be counted once.) 
+Slothy would flag this as one slow error, and count `/plugins/jetpack` as the source. (Only once, however; no matter how many times a plugin or theme is mentioned in a slow_error log entry, it will only be counted once.)
 
 The exact formatting of the slow_error block may vary from server to server, but it isn't important, just as long as:
 
 * There's a blank line between each log entry block;
 * The block notes either `/plugins/*/` or `/themes/*/` (where `*` indicates any combination of characters) in its text.
- 
+
 If the log entry does _not_ mention either a plugin or theme in the format above, the entry will be noted as `**wp-core**` instead (since it stands to reason a slow_error log entry that doesn't mention themes or plugins would be due to standard WordPress core functionality). Note, however, that this may not be the case if your site is running custom PHP code that isn't in a plugin or theme.
+
+## Why don't the percentages add up to 100?
+
+The percentages next to each plugin/theme represent the total number of slow log entries that contain the specified plugin or theme.
+
+If each slow log entry only lists one plugin or theme, then the percentages should add up to 100%. _However_, this is usually not the case. Often, one slow log entry will list two or more themes and/or plugins.
+
+As basic (unrealistic) example: let's imagine a site with only one slow log entry. This single entry mentions both the Divi theme, and the WooCommerce plugin.
+
+In this case, the output would look like this:
+
+```
+---
+TOTAL ERRORS: 1
+SOURCES:
+/themes/divi														 1  100.00%
+/plugins/woocommerce                     1  100.00%
+```
+
+This may seem unintuitive, but just remember: the percentage is the number of the total slow log entries that include the named plugin/theme. So since one entry may contain multiple plugins/themes, the percentages can and often will total to more than 100.
